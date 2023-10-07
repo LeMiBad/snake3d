@@ -34,9 +34,6 @@ const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandar
       lastMove = null
     }
 
-    // if(`${snake.position.x}${snake.position.z}` === `${apple.position.x}${apple.position.z}`) {
-    //   regenerateApple()
-    // }
     if (checkCollision(snake, apple)) {
       regenerateApple()
     }
