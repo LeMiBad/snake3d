@@ -51,19 +51,19 @@ export const initGame = () => {
   camera.rotateX(-0.5);
 
   let prev = 0;
-  const animate = (delta) => {
+  const update = (delta) => {
     let _delta = delta - prev;
     prev = delta;
     
     gameOptions.delta = _delta;
     
-    requestAnimationFrame(animate);
+    requestAnimationFrame(update);
     controls.update();
     renderer.render(scene, camera);
     moveSnake();
   };
 
-  animate(0.3);
+  update(0.3);
 
   return renderer;
 };
