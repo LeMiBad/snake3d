@@ -45,7 +45,6 @@ export const initGame = () => {
   
   let prev = 0
   const animate = (delta) => {
-    console.log(delta - prev)
     prev = delta
     requestAnimationFrame(animate);
     controls.update()

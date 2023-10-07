@@ -4,17 +4,13 @@ import * as THREE from 'three';
 let speed = 1
 
 const move = {
-  "w": (snake) => {snake.translateZ(-1)},
-  "ц": (snake) => {snake.translateZ(-1)},
-  "a": (snake) => {snake.translateX(-1)},
-  "ф": (snake) => {snake.translateX(-1)},
-  "s": (snake) => {snake.translateZ(1)},
-  "ы": (snake) => {snake.translateZ(1)},
-  "d": (snake) => {snake.translateX(1)},
-  "в": (snake) => {snake.translateX(1)},
+  87: (snake) => {snake.translateZ(-1)},
+  65: (snake) => {snake.translateX(-1)},
+  83: (snake) => {snake.translateZ(1)},
+  68: (snake) => {snake.translateX(1)},
 }
 
-const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial, THREE.Object3DEventMap>, lastMove: null | string) => {
+const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial, THREE.Object3DEventMap>, lastMove: null | number) => {
   if(lastMove) {
     move[lastMove](snake)
     const {x, z} = snake.position
@@ -48,11 +44,14 @@ export const snake = new THREE.Mesh(geometry, material);
 snake.translateY(1)
 export const initSnake = () => {
   
-  let lastMove: null | string = null
+  let lastMove: null | number = null
 
   setInterval(() => snakeMoveHandler(snake, lastMove), 300)
   
-  window.addEventListener("keydown", e => lastMove = lastMove !== e.key && move[e.key]? e.key : null)
+  window.addEventListener("keydown", e => {
+    console.log(e.keyCode)
+    lastMove = lastMove !== e.keyCode && move[e.keyCode]? e.keyCode : null
+  })
 
   return snake
 }
