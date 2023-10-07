@@ -48,10 +48,7 @@ export const initSnake = () => {
 
   setInterval(() => snakeMoveHandler(snake, lastMove), 300)
   
-  window.addEventListener("keydown", e => {
-    console.log(e.keyCode)
-    lastMove = lastMove !== e.keyCode && move[e.keyCode]? e.keyCode : null
-  })
+  window.addEventListener("keydown", e => lastMove = lastMove !== e.keyCode && move[e.keyCode]? e.keyCode : null)
 
   return snake
 }
