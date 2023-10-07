@@ -1,4 +1,4 @@
-import { initSnake } from "./initSnake";
+import { initSnake, moveSnake } from "./initSnake";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { initApple } from "./initApple";
@@ -56,10 +56,11 @@ export const initGame = () => {
     prev = delta;
     
     gameOptions.delta = _delta;
-
+    
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    moveSnake();
   };
 
   animate(0.3);

@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import { checkCollision } from './../utils/checkCollision';
 import { gameOptions } from './initGame';
 
-const speed = 1;
+const speed = 0.01;
 
 const move = {
-  87: (snake) => {snake.translateZ(-1)},
-  65: (snake) => {snake.translateX(-1)},
-  83: (snake) => {snake.translateZ(1)},
-  68: (snake) => {snake.translateX(1)},
+  87: (snake, speed, delta) => {snake.translateZ(-speed * delta)},
+  65: (snake, speed, delta) => {snake.translateX(-speed * delta)},
+  83: (snake, speed, delta) => {snake.translateZ(speed * delta)},
+  68: (snake, speed, delta) => {snake.translateX(speed * delta)},
 }
 
 const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial, THREE.Object3DEventMap>, lastMove: null | number) => {
@@ -44,12 +44,11 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
 export const snake = new THREE.Mesh(geometry, material);
 snake.translateY(1)
-export const initSnake = () => {
-  
-  let lastMove: null | number = null
 
-  setInterval(() => snakeMoveHandler(snake, lastMove), 300)
-  
+let lastMove: null | number = null
+export const moveSnake = () => snakeMoveHandler(snake, lastMove);
+export const initSnake = () => {
+
   window.addEventListener("keydown", e => lastMove = lastMove !== e.keyCode && move[e.keyCode]? e.keyCode : null)
 
   return snake
