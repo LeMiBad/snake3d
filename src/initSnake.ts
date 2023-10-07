@@ -6,17 +6,13 @@ import { gameOptions } from './initGame';
 const speed = 1;
 
 const move = {
-  "w": (snake, speed, delta) => {snake.translateZ(-1 * speed * delta)},
-  "a": (snake, speed, delta) => {snake.translateX(-1 * speed * delta)},
-  "ц": (snake, speed, delta) => {snake.translateZ(-1 * speed * delta)},
-  "ф": (snake, speed, delta) => {snake.translateX(-1 * speed * delta)},
-  "s": (snake, speed, delta) => {snake.translateZ(1 * speed * delta)},
-  "ы": (snake, speed, delta) => {snake.translateZ(1 * speed * delta)},
-  "d": (snake, speed, delta) => {snake.translateX(1 * speed * delta)},
-  "в": (snake, speed, delta) => {snake.translateX(1 * speed * delta)},
+  87: (snake) => {snake.translateZ(-1)},
+  65: (snake) => {snake.translateX(-1)},
+  83: (snake) => {snake.translateZ(1)},
+  68: (snake) => {snake.translateX(1)},
 }
 
-const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial, THREE.Object3DEventMap>, lastMove: null | string) => {
+const snakeMoveHandler = (snake: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial, THREE.Object3DEventMap>, lastMove: null | number) => {
   if(lastMove) {
     move[lastMove](snake, speed, gameOptions.delta)
     const {x, z} = snake.position
@@ -53,11 +49,11 @@ export const snake = new THREE.Mesh(geometry, material);
 snake.translateY(1)
 export const initSnake = () => {
   
-  let lastMove: null | string = null
+  let lastMove: null | number = null
 
   setInterval(() => snakeMoveHandler(snake, lastMove), 300)
   
-  window.addEventListener("keydown", e => lastMove = lastMove !== e.key && move[e.key]? e.key : null)
+  window.addEventListener("keydown", e => lastMove = lastMove !== e.keyCode && move[e.keyCode]? e.keyCode : null)
 
   return snake
 }
