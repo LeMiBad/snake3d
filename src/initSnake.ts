@@ -34,6 +34,7 @@ const snakeMoveHandler = (
 
     if (x >= 10.1) {
       snake.position.x = 10;
+      snake.translateX(-10);
       lastMove = null;
     } else if (x <= -10.1) {
       snake.position.x = -10;
@@ -68,3 +69,7 @@ export const initSnake = () => {
 
   return snake;
 };
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
