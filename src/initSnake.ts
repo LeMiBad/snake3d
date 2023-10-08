@@ -3,7 +3,16 @@ import * as THREE from "three";
 import { checkCollision } from "./../utils/checkCollision";
 import { gameOptions } from "./initGame";
 
+type Vector2 = {
+  x: number,
+  y: number
+}
+
 const speed = 0.01;
+const gameFieldSize: Vector2 = {
+  x: 20,
+  y: 20
+}
 
 const move = {
   87: (snake, speed, delta) => {
@@ -32,19 +41,14 @@ const snakeMoveHandler = (
     move[lastMove](snake, speed, gameOptions.delta);
     const { x, z } = snake.position;
 
-    if (x >= 10.1) {
-      snake.position.x = 10;
-      snake.translateX(-10);
-      lastMove = null;
-    } else if (x <= -10.1) {
-      snake.position.x = -10;
-      lastMove = null;
-    } else if (z >= 10.1) {
-      snake.position.z = 10;
-      lastMove = null;
-    } else if (z <= -10.1) {
-      snake.position.z = -10;
-      lastMove = null;
+    if (x >= gameFieldSize.x / 2) {
+      snake.translateX(-gameFieldSize.x);
+    } else if (x <= -gameFieldSize.x / 2) {
+      snake.translateX(gameFieldSize.x);
+    } else if (z >= gameFieldSize.y / 2) {
+      snake.translateZ(-gameFieldSize.y);
+    } else if (z <= -gameFieldSize.y / 2) {
+      snake.translateZ(gameFieldSize.y);
     }
 
     if (checkCollision(snake, apple)) {

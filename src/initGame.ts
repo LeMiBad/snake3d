@@ -51,7 +51,7 @@ export const initGame = () => {
   camera.rotateX(-0.5);
 
   let prev = 0;
-  const update = (delta) => {
+  const update = (delta) => {    
     let _delta = delta - prev;
     prev = delta;
     
