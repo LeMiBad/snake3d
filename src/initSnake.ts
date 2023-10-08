@@ -40,14 +40,15 @@ const snakeMoveHandler = (
   if (lastMove) {
     move[lastMove](snake, speed, gameOptions.delta);
     const { x, z } = snake.position;
+    const correctionValue = 0.01;
 
-    if (x >= gameFieldSize.x / 2) {
+    if (x >= gameFieldSize.x / 2 + correctionValue) {
       snake.translateX(-gameFieldSize.x);
-    } else if (x <= -gameFieldSize.x / 2) {
+    } else if (x <= -gameFieldSize.x / 2 - correctionValue) {
       snake.translateX(gameFieldSize.x);
-    } else if (z >= gameFieldSize.y / 2) {
+    } else if (z >= gameFieldSize.y / 2 + correctionValue) {
       snake.translateZ(-gameFieldSize.y);
-    } else if (z <= -gameFieldSize.y / 2) {
+    } else if (z <= -gameFieldSize.y / 2 - correctionValue) {
       snake.translateZ(gameFieldSize.y);
     }
 
