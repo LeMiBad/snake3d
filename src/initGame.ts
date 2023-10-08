@@ -5,7 +5,7 @@ import { initApple } from "./initApple";
 
 const createCube = () => {
   const geometry = new THREE.BoxGeometry(21, 1, 21);
-  const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+  const material = new THREE.MeshStandardMaterial({ color: 0x6a994e });
   const cube = new THREE.Mesh(geometry, material);
 
   return cube;
@@ -16,7 +16,7 @@ const setLight = (scene: THREE.Scene) => {
   pointLight.position.set(0, 15, 0);
   scene.add(pointLight);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 };
 
@@ -44,7 +44,7 @@ export const initGame = () => {
   scene.add(createCube());
   scene.add(initSnake());
   scene.add(initApple());
-  scene.background = new THREE.Color(0xffffff);
+  scene.background = new THREE.Color(0xf2e9e4);
 
   camera.position.z = 13;
   camera.position.y = 13.7;

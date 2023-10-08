@@ -58,7 +58,7 @@ const snakeMoveHandler = (
 };
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+const material = new THREE.MeshStandardMaterial({ color: 0x386641 });
 export const snake = new THREE.Mesh(geometry, material);
 snake.translateY(1);
 
