@@ -1,7 +1,7 @@
 import { apple, regenerateApple } from "./initApple";
 import * as THREE from "three";
 import { checkCollision } from "./../utils/checkCollision";
-import { gameOptions } from "./initGame";
+import { gameOptions, scene } from "./initGame";
 
 type Vector2 = {
   x: number,
@@ -20,6 +20,8 @@ const move = {
   83: (snake, speed, delta) => snake.translateZ(speed * delta),
   68: (snake, speed, delta) => snake.translateX(speed * delta),
 };
+
+const bodys = []
 
 const snakeMoveHandler = (
   snake: THREE.Mesh<
@@ -45,7 +47,8 @@ const snakeMoveHandler = (
     }
 
     if (checkCollision(snake, apple)) {
-      console.log("СЪЕЛ")
+      bodys.push({x: Math.round(snake.position.x), z: Math.round(snake.position.z), lastMove})
+      initSnakeBody(bodys.length-1)
       regenerateApple();
     }
   }
@@ -60,23 +63,25 @@ let lastMove: null | number = null;
 let curMove: null | number = null;
 let lastCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`
 
+const queque = []
+
 export const moveSnake = () => {
-  const curCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`
+  const curCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`;
   
-  if(!curMove) {
-    curMove = lastMove
+  if (!curMove) {
+    curMove = lastMove;
   } 
 
-  if(curCoords !== lastCoords) {
-    console.log(curCoords,"  !!!  ", lastCoords)
-    if(lastMove) {
-      curMove = lastMove
-      lastMove = null
+  if (curCoords !== lastCoords) {
+    if (lastMove) {
+      queque.unshift({ x: snake.position.x, z: snake.position.z });
+      curMove = lastMove;
+      lastMove = null;
     }
-    lastCoords = curCoords
+    lastCoords = curCoords;
   }
 
-  snakeMoveHandler(snake, curMove)
+  snakeMoveHandler(snake, curMove);
 };
 
 export const initSnake = () => {
@@ -90,28 +95,40 @@ export const initSnake = () => {
 };
 
 
+const initSnakeBody = (i) => {
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const material = new THREE.MeshStandardMaterial({ color: 0x386641 });
+  const snakeBody = new THREE.Mesh(geometry, material);
+
+  const {x, z} = bodys[i]
+
+  snakeBody.position.x = x
+  snakeBody.position.z = z
+  snakeBody.position.y += 1
+
+  bodys[i].body = snakeBody
+
+  scene.add(snakeBody)
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ==> === !== !=
-
-// HEAD - [{1 5, VECTOR}]
-// BODY - 1 4
+export const moveBodys = () => {
+  const curCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`
+  
+  if(!curMove) {
+    curMove = lastMove
+  } 
+  
+  if(curCoords !== lastCoords) {
+    if(lastMove) {
+      queque.push(curCoords)
+      curMove = lastMove
+      lastMove = null
+    }
+    lastCoords = curCoords
+  }
+  
+  for(let body of bodys) {
+    snakeMoveHandler(body.body, curMove)
+  }
+}

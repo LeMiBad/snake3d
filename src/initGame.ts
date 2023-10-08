@@ -1,4 +1,4 @@
-import { initSnake, moveSnake } from "./initSnake";
+import { initSnake, moveBodys, moveSnake } from "./initSnake";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { initApple } from "./initApple";
@@ -21,9 +21,9 @@ const setLight = (scene: THREE.Scene) => {
 };
 
 export const gameOptions = { delta: 0 };
+export const scene = new THREE.Scene();
 
 export const initGame = () => {
-  const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -60,6 +60,7 @@ export const initGame = () => {
     requestAnimationFrame(update);
     controls.update();
     renderer.render(scene, camera);
+    moveBodys()
     moveSnake();
   };
 
