@@ -45,6 +45,7 @@ const snakeMoveHandler = (
     }
 
     if (checkCollision(snake, apple)) {
+      console.log("СЪЕЛ")
       regenerateApple();
     }
   }
@@ -67,6 +68,7 @@ export const moveSnake = () => {
   } 
 
   if(curCoords !== lastCoords) {
+    console.log(curCoords,"  !!!  ", lastCoords)
     if(lastMove) {
       curMove = lastMove
       lastMove = null
@@ -86,3 +88,30 @@ export const initSnake = () => {
 
   return snake;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==> === !== !=
+
+// HEAD - [{1 5, VECTOR}]
+// BODY - 1 4
