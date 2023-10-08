@@ -8,7 +8,7 @@ type Vector2 = {
   y: number
 }
 
-const speed = 0.01;
+const speed = 0.005;
 const gameFieldSize: Vector2 = {
   x: 20,
   y: 20
@@ -63,17 +63,33 @@ export const snake = new THREE.Mesh(geometry, material);
 snake.translateY(1);
 
 let lastMove: null | number = null;
-export const moveSnake = () => snakeMoveHandler(snake, lastMove);
+let curMove: null | number = null;
+let lastCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`
+
+export const moveSnake = () => {
+  const curCoords = `${Math.ceil(snake.position.x)}-${Math.ceil(snake.position.z)}`
+  
+  if(!curMove) {
+    curMove = lastMove
+  } 
+
+  if(curCoords !== lastCoords) {
+    if(lastMove) {
+      curMove = lastMove
+      lastMove = null
+    }
+    lastCoords = curCoords
+  }
+
+  snakeMoveHandler(snake, curMove)
+};
+
 export const initSnake = () => {
-  window.addEventListener(
-    "keydown",
-    (e) =>
-      (lastMove = lastMove !== e.keyCode && move[e.keyCode] ? e.keyCode : null)
-  );
+  window.addEventListener("keydown", (e) => {
+    if(!lastMove) {
+      lastMove = lastMove !== e.keyCode && move[e.keyCode] ? e.keyCode : null
+    }
+  });
 
   return snake;
 };
-
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
