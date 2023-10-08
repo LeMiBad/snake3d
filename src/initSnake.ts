@@ -32,7 +32,7 @@ const snakeMoveHandler = (
   if (lastMove) {
     move[lastMove](snake, speed, gameOptions.delta);
     const { x, z } = snake.position;
-    const correctionValue = 0.01;
+    const correctionValue = 0.1;
 
     if (x >= gameFieldSize.x / 2 + correctionValue) {
       snake.translateX(-gameFieldSize.x);
