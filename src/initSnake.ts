@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { checkCollision } from './../utils/checkCollision';
 import { gameOptions } from './initGame';
 
-const speed = 0.01;
+const speed = 0.005;
 
 const move = {
   87: (snake, speed, delta) => {snake.translateZ(-speed * delta)},
