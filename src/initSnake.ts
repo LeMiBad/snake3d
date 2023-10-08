@@ -15,18 +15,10 @@ const gameFieldSize: Vector2 = {
 }
 
 const move = {
-  87: (snake, speed, delta) => {
-    snake.translateZ(-speed * delta);
-  },
-  65: (snake, speed, delta) => {
-    snake.translateX(-speed * delta);
-  },
-  83: (snake, speed, delta) => {
-    snake.translateZ(speed * delta);
-  },
-  68: (snake, speed, delta) => {
-    snake.translateX(speed * delta);
-  },
+  87: (snake, speed, delta) => snake.translateZ(-speed * delta),
+  65: (snake, speed, delta) => snake.translateX(-speed * delta),
+  83: (snake, speed, delta) => snake.translateZ(speed * delta),
+  68: (snake, speed, delta) => snake.translateX(speed * delta),
 };
 
 const snakeMoveHandler = (
